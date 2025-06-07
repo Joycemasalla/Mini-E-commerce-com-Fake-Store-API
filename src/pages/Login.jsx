@@ -8,76 +8,125 @@ import { StyledLink } from '../components/Header.styles';
 
 // Estilos para o componente de Login
 const LoginContainer = styled.div`
+  min-height: calc(100vh - 100px);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: calc(100vh - 80px); /* Ajuste com base na altura do Header */
-  background-color: #f0f2f5;
+  padding: 2rem 1rem;
 `;
 
 const LoginFormCard = styled.div`
-  background-color: #fff;
-  padding: 40px;
-  border-radius: 10px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 3rem 2.5rem;
+  border-radius: 25px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
   width: 100%;
-  max-width: 400px;
+  max-width: 450px;
   text-align: center;
+  border: 1px solid rgba(255,255,255,0.3);
+
+  @media (max-width: 768px) {
+    padding: 2rem 1.5rem;
+    border-radius: 20px;
+  }
 `;
 
 const LoginTitle = styled.h2`
-  margin-bottom: 30px;
-  color: #333;
-  font-size: 2em;
+  margin-bottom: 2rem;
+  color: #2c3e50;
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 `;
 
 const FormGroup = styled.div`
-  margin-bottom: 20px;
+  margin-bottom: 1.5rem;
   text-align: left;
 `;
 
 const Label = styled.label`
   display: block;
-  margin-bottom: 8px;
-  font-weight: bold;
-  color: #555;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #34495e;
+  font-size: 1rem;
 `;
 
 const Input = styled.input`
-  width: calc(100% - 20px); /* Ajusta o padding */
-  padding: 12px 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 1em;
-  transition: border-color 0.2s ease;
+  width: 100%;
+  padding: 1rem 1.2rem;
+  border: 2px solid #e9ecef;
+  border-radius: 15px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background: #f8f9fa;
+  box-sizing: border-box;
 
   &:focus {
-    border-color: #007bff;
-    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+    border-color: #667eea;
+    box-shadow: 0 0 0 0.3rem rgba(102, 126, 234, 0.25);
+    outline: none;
+    background: white;
+    transform: translateY(-1px);
+  }
+
+  &::placeholder {
+    color: #adb5bd;
   }
 `;
 
 const SubmitButton = styled.button`
   width: 100%;
-  padding: 15px;
-  background-color: #007bff;
+  padding: 1.2rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
-  border-radius: 8px;
-  font-size: 1.1em;
-  font-weight: bold;
+  border: none;
+  border-radius: 15px;
+  font-size: 1.2rem;
+  font-weight: 700;
   cursor: pointer;
-  transition: background-color 0.2s ease;
-  margin-top: 20px;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 1px;
 
   &:hover {
-    background-color: #0056b3;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 35px rgba(102, 126, 234, 0.6);
+  }
+
+  &:active {
+    transform: translateY(0);
   }
 
   &:disabled {
-    background-color: #cccccc;
+    background: #bdc3c7;
     cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
   }
 `;
+
+const RegisterButton = styled(StyledLink)`
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #aea1be 0%, #b3abd8 100%);
+  color: #ffffff;
+  border-radius: 50px;
+  font-weight: 600;
+  text-align: center;
+  margin-top: 0.5rem;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  font-size: 1rem;
+  `;
 
 // Componente Login
 function Login({ onLogin }) {
@@ -179,7 +228,7 @@ function Login({ onLogin }) {
                     <br /> <strong>Usuário: johnd</strong> | <strong>Senha: m38rmF$</strong>
                     <br /> <strong>Usuário: mor_2314</strong> | <strong>Senha: 83r5^_</strong>
                 </p>
-                <StyledLink to="/register">Não tem uma conta? Cadastre-se</StyledLink>
+                <RegisterButton to="/register">Não tem uma conta? Cadastre-se</RegisterButton>
 
             </LoginFormCard>
         </LoginContainer>

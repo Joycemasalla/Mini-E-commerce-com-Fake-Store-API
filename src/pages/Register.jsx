@@ -7,89 +7,149 @@ import { toast } from 'react-toastify';
 
 // Estilos para o componente de Registro (reutilizando muitos de Login.styles.js)
 const RegisterContainer = styled.div`
+  min-height: calc(100vh - 100px);
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: calc(100vh - 80px); /* Ajuste com base na altura do Header */
-  background-color: #f0f2f5;
+  padding: 2rem 1rem;
 `;
 
 const RegisterFormCard = styled.div`
-  background-color: #fff;
-  padding: 40px;
-  border-radius: 10px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 3rem 2.5rem;
+  border-radius: 25px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
   width: 100%;
-  max-width: 500px; /* Um pouco maior para mais campos */
+  max-width: 550px;
+  max-height: 90vh;
+  overflow-y: auto;
   text-align: center;
+  border: 1px solid rgba(255,255,255,0.3);
+
+  @media (max-width: 768px) {
+    padding: 2rem 1.5rem;
+    border-radius: 20px;
+    max-height: 95vh;
+  }
+
+  /* Scrollbar personalizada */
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    border-radius: 10px;
+  }
 `;
 
 const RegisterTitle = styled.h2`
-  margin-bottom: 30px;
-  color: #333;
-  font-size: 2em;
+  margin-bottom: 2rem;
+  color: #2c3e50;
+  font-size: 2.2rem;
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  @media (max-width: 768px) {
+    font-size: 1.8rem;
+  }
 `;
 
 const FormGroup = styled.div`
-  margin-bottom: 20px;
+  margin-bottom: 1.2rem;
   text-align: left;
 `;
 
 const Label = styled.label`
   display: block;
-  margin-bottom: 8px;
-  font-weight: bold;
-  color: #555;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #34495e;
+  font-size: 0.9rem;
 `;
 
 const Input = styled.input`
-  width: calc(100% - 20px); /* Ajusta o padding */
-  padding: 12px 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  font-size: 1em;
-  transition: border-color 0.2s ease;
+  width: 100%;
+  padding: 0.9rem 1rem;
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  background: #f8f9fa;
+  box-sizing: border-box;
 
   &:focus {
-    border-color: #28a745; /* Cor de foco diferente para registro */
-    box-shadow: 0 0 0 0.2rem rgba(40,167,69,.25);
+    border-color: #4facfe;
+    box-shadow: 0 0 0 0.3rem rgba(79, 172, 254, 0.25);
+    outline: none;
+    background: white;
+    transform: translateY(-1px);
+  }
+
+  &::placeholder {
+    color: #adb5bd;
   }
 `;
 
 const SubmitButton = styled.button`
   width: 100%;
-  padding: 15px;
-  background-color: #28a745; /* Cor verde para registro */
+  padding: 1.2rem;
+  background: linear-gradient(135deg, #604ffe 0%, #00f2fe 100%);
   color: white;
-  border-radius: 8px;
-  font-size: 1.1em;
-  font-weight: bold;
+  border: none;
+  border-radius: 15px;
+  font-size: 1.1rem;
+  font-weight: 700;
   cursor: pointer;
-  transition: background-color 0.2s ease;
-  margin-top: 20px;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+  box-shadow: 0 8px 25px rgba(79, 172, 254, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 1px;
 
   &:hover {
-    background-color: #218838;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 35px rgba(79, 172, 254, 0.6);
+  }
+
+  &:active {
+    transform: translateY(0);
   }
 
   &:disabled {
-    background-color: #cccccc;
+    background: #bdc3c7;
     cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
   }
 `;
 
 const StyledLink = styled(Link)`
-  color: #007bff;
+  color: #4facfe;
   text-decoration: none;
-  font-weight: bold;
-  margin-top: 20px;
+  font-weight: 700;
+  margin-top: 1.5rem;
   display: block;
+  font-size: 1rem;
+  transition: all 0.3s ease;
 
   &:hover {
+    color: #00f2fe;
     text-decoration: underline;
+    transform: translateY(-1px);
   }
 `;
-
 function Register() {
     const [formData, setFormData] = useState({
         email: '',
@@ -222,7 +282,7 @@ function Register() {
                         {loading ? 'Registrando...' : 'Registrar'}
                     </SubmitButton>
                 </form>
-                <StyledLink to="/login">Já tem uma conta? Faça Login</StyledLink>
+                <SubmitButton to="/login">Já tem uma conta? Faça Login</SubmitButton>
             </RegisterFormCard>
         </RegisterContainer>
     );
