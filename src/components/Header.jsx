@@ -35,6 +35,7 @@ function Header({ cartItemCount, loggedInUser, onLogout }) {
                         </>
                     ) : ( // Renderiza link de login se o usuário não estiver logado
                         <NavItem><StyledLink to="/login">Login</StyledLink></NavItem>
+                        
                     )}
                 </NavList>
             </Nav>
