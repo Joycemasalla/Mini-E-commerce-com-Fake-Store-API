@@ -13,7 +13,7 @@ function Header({ cartItemCount, loggedInUser, onLogout }) {
 
   return (
     <StyledHeader>
-      <div className="header-content-wrapper"> {/* <-- NOVO WRAPPER */}
+      <div className="header-content-wrapper"> 
         <Logo>
           <LogoLink to="/">React Shop</LogoLink>
         </Logo>
@@ -38,7 +38,7 @@ function Header({ cartItemCount, loggedInUser, onLogout }) {
             )}
           </NavList>
         </Nav>
-      </div> {/* <-- FIM DO NOVO WRAPPER */}
+      </div> 
     </StyledHeader>
   );
 }

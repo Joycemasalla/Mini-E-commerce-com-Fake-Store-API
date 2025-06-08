@@ -11,6 +11,7 @@ import GlobalStyle from './GlobalStyles';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
 import Register from './pages/Register';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   // 1. Estado para armazenar os itens do carrinho
@@ -156,6 +157,19 @@ function App() {
         />
         <Route path="/register" element={<Register />} />
       </Routes>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+        style={{ zIndex: 9999 }}
+      />
     </BrowserRouter>
   );
 }

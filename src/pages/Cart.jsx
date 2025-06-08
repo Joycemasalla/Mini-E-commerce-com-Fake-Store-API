@@ -1,4 +1,4 @@
-// src/pages/Cart.jsx
+// src/pages/Cart.jsx - Versão com debug para identificar o problema
 import React from 'react';
 import { Link } from 'react-router-dom';
 import {
@@ -30,10 +30,46 @@ import {
 } from './Cart.styles';
 
 function Cart({ cartItems, removeFromCart, addToCart, decrementQuantity }) {
+    // Debug: Log para verificar se as funções estão sendo recebidas
+    console.log('Cart Props:', {
+        cartItems,
+        addToCart: typeof addToCart,
+        decrementQuantity: typeof decrementQuantity,
+        removeFromCart: typeof removeFromCart
+    });
+
     const subtotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
     const shipping = subtotal > 100 ? 0 : 20;
     const total = subtotal + shipping;
     const itemCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+
+    // Funções com debug
+    const handleIncrement = (item) => {
+        console.log('Incrementing item:', item);
+        if (addToCart) {
+            addToCart(item);
+        } else {
+            console.error('addToCart function not provided');
+        }
+    };
+
+    const handleDecrement = (itemId) => {
+        console.log('Decrementing item ID:', itemId);
+        if (decrementQuantity) {
+            decrementQuantity(itemId);
+        } else {
+            console.error('decrementQuantity function not provided');
+        }
+    };
+
+    const handleRemove = (itemId) => {
+        console.log('Removing item ID:', itemId);
+        if (removeFromCart) {
+            removeFromCart(itemId);
+        } else {
+            console.error('removeFromCart function not provided');
+        }
+    };
 
     return (
         <CartContainer>
@@ -66,23 +102,23 @@ function Cart({ cartItems, removeFromCart, addToCart, decrementQuantity }) {
                                 <CartItemImage src={item.image} alt={item.title} />
                                 <CartItemInfo>
                                     <CartItemTitle>{item.title}</CartItemTitle>
-                                    <CartItemPrice>R$ {item.price.toFixed(2)}</CartItemPrice>
+                                    <CartItemPrice>R$ {item.price.toFixed(2)} (unitário)</CartItemPrice>
                                     
                                     <div className="item-actions">
                                         <QuantityControl>
                                             <QuantityButton 
-                                                onClick={() => decrementQuantity(item.id)}
+                                                onClick={() => handleDecrement(item.id)}
                                                 disabled={item.quantity <= 1}
                                             >
                                                 −
                                             </QuantityButton>
                                             <QuantityDisplay>{item.quantity}</QuantityDisplay>
-                                            <QuantityButton onClick={() => addToCart(item)}>
+                                            <QuantityButton onClick={() => handleIncrement(item)}>
                                                 +
                                             </QuantityButton>
                                         </QuantityControl>
                                         
-                                        <RemoveButton onClick={() => removeFromCart(item.id)}>
+                                        <RemoveButton onClick={() => handleRemove(item.id)}>
                                             🗑️ Remover
                                         </RemoveButton>
                                     </div>
@@ -98,6 +134,11 @@ function Cart({ cartItems, removeFromCart, addToCart, decrementQuantity }) {
                     <CartSummary>
                         <OrderSummaryCard>
                             <SummaryTitle>Resumo do Pedido</SummaryTitle>
+                            
+                            {/* Debug: Mostrar valores calculados */}
+                            <div style={{fontSize: '12px', color: '#666', marginBottom: '1rem'}}>
+                                Debug - Subtotal: {subtotal.toFixed(2)} | Frete: {shipping} | Total: {total.toFixed(2)}
+                            </div>
                             
                             <SummaryItem>
                                 <span>Subtotal ({itemCount} {itemCount === 1 ? 'item' : 'itens'})</span>
