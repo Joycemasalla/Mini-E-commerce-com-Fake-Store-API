@@ -10,6 +10,7 @@ const GlobalStyle = createGlobalStyle`
 
   html {
     scroll-behavior: smooth;
+    height: 100%;
   }
 
   body {
@@ -18,11 +19,17 @@ const GlobalStyle = createGlobalStyle`
     color: #2d3748;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     min-height: 100vh;
+    height: 100%;
+    margin: 0; 
+    padding: 0;
   }
 
   #root {
     min-height: 100vh;
-    background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+    width: 100vw; 
+    min-height: 100vh;
+        background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+
   }
 
   button {

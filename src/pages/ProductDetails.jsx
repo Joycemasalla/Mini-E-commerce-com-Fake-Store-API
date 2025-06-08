@@ -1,7 +1,7 @@
 // src/pages/ProductDetails.jsx
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { useParams, useNavigate } from 'react-router-dom'; //
+import axios from 'axios'; //
 import {
     ProductDetailsContainer,
     BackButton,
@@ -14,17 +14,19 @@ import {
     ProductRating,
     AddToCartButton,
     Message
-} from './ProductDetails.styles';
+} from './ProductDetails.styles'; //
 
-// Recebe addToCart como prop
-function ProductDetails({ addToCart }) { // <-- Adicionado addToCart aqui
-    const { id } = useParams();
-    const navigate = useNavigate();
+// Recebe addToCart e loggedInUser como prop do App.jsx
+function ProductDetails({ addToCart, loggedInUser }) { //
+    const { id } = useParams(); //
+    const navigate = useNavigate(); //
 
-    const [product, setProduct] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const [product, setProduct] = useState(null); //
+    const [loading, setLoading] = useState(true); //
+    const [error, setError] = useState(null); //
 
+  
+    // Efeito para buscar detalhes do produto: Só busca se estiver logado e tiver ID
     useEffect(() => {
         const fetchProductDetails = async () => {
             try {
@@ -38,30 +40,30 @@ function ProductDetails({ addToCart }) { // <-- Adicionado addToCart aqui
                 setLoading(false);
             }
         };
-
-        if (id) {
+        if (id ) {
             fetchProductDetails();
         }
-    }, [id]);
+    }, [id]); 
+
 
     if (loading) {
-        return <div style={{ padding: '20px', textAlign: 'center' }}>Carregando detalhes do produto...</div>;
+        return <Message>Carregando detalhes do produto...</Message>;
     }
 
     if (error) {
         return (
-            <div style={{ padding: '20px', textAlign: 'center', color: 'red' }}>
+            <Message error>
                 {error}
                 <br />
-                <button onClick={() => navigate('/')} style={{ marginTop: '10px', padding: '10px 15px', backgroundColor: '#007bff', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>
+                <BackButton onClick={() => navigate('/')} style={{ marginTop: '20px' }}>
                     Voltar para Produtos
-                </button>
-            </div>
+                </BackButton>
+            </Message>
         );
     }
 
     if (!product) {
-        return <div style={{ padding: '20px', textAlign: 'center' }}>Produto não encontrado.</div>;
+        return <Message>Produto não encontrado.</Message>;
     }
 
     return (

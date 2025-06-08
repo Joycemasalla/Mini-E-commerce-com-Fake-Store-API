@@ -5,33 +5,6 @@ import styled from 'styled-components';
 import { toast } from 'react-toastify';
 import { StyledLink } from '../components/Header.styles';
 
-// Configuração do toast para garantir que funcione
-const showToast = (message, type = 'info') => {
-  try {
-    if (type === 'success') {
-      toast.success(message, {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
-    } else if (type === 'error') {
-      toast.error(message, {
-        position: "top-right",
-        autoClose: 4000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
-    }
-  } catch (error) {
-    // Fallback para alert se o toast não funcionar
-    alert(`${type.toUpperCase()}: ${message}`);
-  }
-};
 
 // Estilos para o componente de Login
 const LoginContainer = styled.div`
@@ -234,14 +207,14 @@ function Login({ onLogin }) {
             
             if (!user) {
                 console.log('Usuário não encontrado:', username);
-                showToast('Usuário não encontrado. Verifique suas credenciais.', 'error');
+                toast.error('Usuário não encontrado. Verifique suas credenciais.', 'error');
                 setLoading(false);
                 return;
             }
 
             if (user.password !== password) {
                 console.log('Senha incorreta para usuário:', username);
-                showToast('Senha incorreta. Tente novamente.', 'error');
+                toast.error('Senha incorreta. Tente novamente.', 'error');
                 setLoading(false);
                 return;
             }
@@ -251,7 +224,7 @@ function Login({ onLogin }) {
             
             // Login bem-sucedido
             console.log('Login bem-sucedido para:', user.userData.name);
-            showToast(`Bem-vindo, ${user.userData.name}! Login realizado com sucesso.`, 'success');
+            toast.success(`Bem-vindo, ${user.userData.name}! Login realizado com sucesso.`, 'success');
             
             // Chama a função onLogin do App.jsx
             onLogin(simulatedToken, user.userData);
@@ -261,7 +234,7 @@ function Login({ onLogin }) {
             
         } catch (error) {
             console.error('Erro de login:', error);
-            showToast('Erro interno do servidor. Tente novamente mais tarde.', 'error');
+            toast.error('Erro interno do servidor. Tente novamente mais tarde.', 'error');
         } finally {
             setLoading(false);
         }

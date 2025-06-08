@@ -4,33 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { toast } from 'react-toastify';
 
-// Configuração do toast para garantir que funcione
-const showToast = (message, type = 'info') => {
-  try {
-    if (type === 'success') {
-      toast.success(message, {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
-    } else if (type === 'error') {
-      toast.error(message, {
-        position: "top-right",
-        autoClose: 4000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
-    }
-  } catch (error) {
-    // Fallback para alert se o toast não funcionar
-    alert(`${type.toUpperCase()}: ${message}`);
-  }
-};
+
 
 // Estilos para o componente de Registro (usando as mesmas cores do Login)
 const RegisterContainer = styled.div`
@@ -278,7 +252,7 @@ function Register() {
             // Validar dados do formulário
             const validationErrors = validateFormData(formData);
             if (validationErrors.length > 0) {
-                showToast(`Erro de validação: ${validationErrors[0]}`, 'error');
+                toast.error(`Erro de validação: ${validationErrors[0]}`, 'error');
                 console.log('Erros de validação:', validationErrors);
                 setLoading(false);
                 return;
@@ -290,7 +264,7 @@ function Register() {
             // Verificar se o usuário já existe (simulação)
             const existingUsernames = ['johnd', 'mor_2314', 'kevinryan', 'admin', 'test'];
             if (existingUsernames.includes(formData.username.toLowerCase())) {
-                showToast('Este nome de usuário já está em uso. Escolha outro.', 'error');
+                toast.error('Este nome de usuário já está em uso. Escolha outro.', 'error');
                 console.log('Username já existe:', formData.username);
                 setLoading(false);
                 return;
@@ -316,7 +290,7 @@ function Register() {
             };
 
             console.log('✅ Usuário criado com sucesso:', newUser);
-            showToast(
+            toast.success(
                 `🎉 Conta criada com sucesso para "${formData.name.firstname} ${formData.name.lastname}"! Use as credenciais de teste para fazer login.`,
                 'success'
             );
@@ -329,7 +303,7 @@ function Register() {
 
         } catch (error) {
             console.error('Erro de registro:', error);
-            showToast('Erro interno do servidor. Tente novamente mais tarde.', 'error');
+            toast.error('Erro interno do servidor. Tente novamente mais tarde.', 'error');
         } finally {
             setLoading(false);
         }

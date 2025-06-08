@@ -106,14 +106,13 @@ function App() {
     }
   }, [loggedInUser]);
 
-  // NOVO: Função para lidar com o login
+  //Função para lidar com o login
   const handleLogin = (token, user) => {
     setAuthToken(token);
     setLoggedInUser(user);
-    toast.success(`Bem-vindo, ${user.username}!`);
   };
 
-  // NOVO: Função para lidar com o logout
+  //  Função para lidar com o logout
   const handleLogout = () => {
     setAuthToken(null);
     setLoggedInUser(null);
