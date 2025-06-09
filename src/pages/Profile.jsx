@@ -3,105 +3,130 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-// Estilos para o componente de Perfil
-const ProfileContainer = styled.div`
+// Estilos padronizados
+const ProfilePageContainer = styled.div`
   min-height: calc(100vh - 100px);
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
   padding: 2rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  background-color: #f8f9fa;
 `;
 
-const ProfileCard = styled.div`
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  padding: 3rem;
-  border-radius: 25px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-  width: 100%;
-  max-width: 600px;
+const PageTitle = styled.h1`
+ font-size: 3rem;
+  font-weight: 800;
   text-align: center;
-  border: 1px solid rgba(255,255,255,0.3);
+  margin-bottom: 3rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    border-radius: 2px;
+  }
 
   @media (max-width: 768px) {
-    padding: 2rem 1.5rem;
-    border-radius: 20px;
+    font-size: 2rem;
   }
 `;
 
-const ProfileTitle = styled.h2`
-  margin-bottom: 2rem;
-  color: #2c3e50;
-  font-size: 2.5rem;
-  font-weight: 700;
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+const ProfileContainer = styled.div`
+  max-width: 800px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+
+  @media (max-width: 768px) {
+    margin: 1rem;
+    padding: 1.5rem;
+  }
 `;
 
 const UserInfo = styled.div`
-  text-align: left;
   margin-bottom: 2rem;
-  padding: 2rem;
-  border: 2px solid #f093fb;
-  border-radius: 20px;
-  background: linear-gradient(135deg, rgba(240, 147, 251, 0.1) 0%, rgba(245, 87, 108, 0.1) 100%);
 `;
 
-const InfoRow = styled.p`
-  margin-bottom: 1rem;
-  font-size: 1.1rem;
-  color: #555;
-  padding: 0.8rem;
-  border-radius: 10px;
-  background: rgba(255,255,255,0.7);
-  border-left: 4px solid #f5576c;
+const InfoRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+  border-bottom: 1px solid #eee;
   
-  strong {
-    color: #2c3e50;
-    font-weight: 700;
+  &:last-child {
+    border-bottom: none;
   }
 
-  &:last-child {
-    margin-bottom: 0;
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
   }
 `;
 
-const StyledLinkButton = styled.button`
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+const InfoLabel = styled.span`
+  font-weight: 600;
+  color: #555;
+  font-size: 1rem;
+`;
+
+const InfoValue = styled.span`
+  color: #333;
+  font-size: 1rem;
+
+  @media (max-width: 768px) {
+    font-weight: 500;
+  }
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+  }
+`;
+
+const BackButton = styled.button`
+  background-color: #007bff;
   color: white;
-  padding: 1.2rem 2.5rem;
   border: none;
-  border-radius: 50px;
-  font-size: 1.1rem;
-  font-weight: 700;
+  padding: 0.75rem 2rem;
+  border-radius: 4px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 8px 25px rgba(240, 147, 251, 0.4);
-  text-transform: uppercase;
-  letter-spacing: 1px;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
 
   &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 35px rgba(240, 147, 251, 0.6);
+    background-color: #0056b3;
   }
 
   &:active {
-    transform: translateY(0);
+    transform: translateY(1px);
   }
 `;
 
-const Message = styled.p`
+const Message = styled.div`
   text-align: center;
-  font-size: 1.2rem;
-  color: #e74c3c;
   padding: 2rem;
-  background: rgba(255,255,255,0.9);
-  border-radius: 15px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  color: #666;
+  font-size: 1.1rem;
 `;
 
 // Componente Profile
@@ -116,21 +141,58 @@ function Profile({ loggedInUser, authToken }) {
   }, [loggedInUser, authToken, navigate]);
 
   if (!loggedInUser) {
-    return <Message>Redirecionando para a página de login...</Message>;
+    return (
+      <ProfilePageContainer>
+        <Message>Redirecionando para a página de login...</Message>
+      </ProfilePageContainer>
+    );
   }
 
   return (
-    <ProfileContainer>
-      <ProfileTitle>Meu Perfil</ProfileTitle>
-      <UserInfo>
-        <InfoRow><strong>Nome de Usuário:</strong> {loggedInUser.username}</InfoRow>
-        <InfoRow><strong>Nome Completo:</strong> {loggedInUser.name}</InfoRow>
-        <InfoRow><strong>Email:</strong> {loggedInUser.email}</InfoRow>
-        {/* Você pode exibir outras informações do usuário aqui, como endereço, telefone etc.
-            Se a Fake Store API as fornecer e você as buscar. */}
-      </UserInfo>
-      <StyledLinkButton onClick={() => navigate('/')}>Voltar para a Loja</StyledLinkButton>
-    </ProfileContainer>
+    <ProfilePageContainer>
+      <PageTitle>Meu Perfil</PageTitle>
+      
+      <ProfileContainer>
+        <UserInfo>
+          <InfoRow>
+            <InfoLabel>Nome de Usuário:</InfoLabel>
+            <InfoValue>{loggedInUser.username}</InfoValue>
+          </InfoRow>
+          
+          <InfoRow>
+            <InfoLabel>Nome Completo:</InfoLabel>
+            <InfoValue>{loggedInUser.name}</InfoValue>
+          </InfoRow>
+          
+          <InfoRow>
+            <InfoLabel>Email:</InfoLabel>
+            <InfoValue>{loggedInUser.email}</InfoValue>
+          </InfoRow>
+          
+          {loggedInUser.phone && (
+            <InfoRow>
+              <InfoLabel>Telefone:</InfoLabel>
+              <InfoValue>{loggedInUser.phone}</InfoValue>
+            </InfoRow>
+          )}
+          
+          {loggedInUser.address && (
+            <InfoRow>
+              <InfoLabel>Endereço:</InfoLabel>
+              <InfoValue>
+                {loggedInUser.address.street}, {loggedInUser.address.number} - {loggedInUser.address.city}
+              </InfoValue>
+            </InfoRow>
+          )}
+        </UserInfo>
+        
+        <ButtonContainer>
+          <BackButton onClick={() => navigate('/')}>
+            Voltar para a Loja
+          </BackButton>
+        </ButtonContainer>
+      </ProfileContainer>
+    </ProfilePageContainer>
   );
 }
 
